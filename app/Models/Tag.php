@@ -16,8 +16,8 @@ class Tag extends Model
         return $this->belongsTo(User::class);
     }
 
-    // A tag belongs to many notes
+    // A tag has many notes
     public function notes() {
-        return $this->belongsToMany(Note::class);
+        return $this->hasMany(Note::class);
     }
 }

@@ -22,3 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('notes', 'NoteController');
     Route::resource('tags', 'TagController');
 });
+
+Auth::routes([
+    'confirm' => false
+]);

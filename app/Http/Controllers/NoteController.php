@@ -15,6 +15,7 @@ class NoteController extends Controller
     public function index()
     {
         return Note::where('user_id', auth()->id())
+            ->with('tag')
             ->latest()
             ->get();
     }
