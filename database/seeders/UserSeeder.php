@@ -16,9 +16,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)
-            ->has(Note::factory()->count(5))
-            ->has(Tag::factory()->count(3))
-            ->create();
+        // Create a user with 10 tags with 3 notes
+        $user = User::factory()->create();
+        $tags = Tag::factory(5)->state([
+            'user_id' => $user->id
+        ])->create();
+        $notes = Note::factory(3)->state([
+            'user_id' => $user->id,
+            'tag_id' => $tags->first()->id
+        ])->create();
     }
 }
