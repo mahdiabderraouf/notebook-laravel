@@ -17,7 +17,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Create a user with 10 tags with 3 notes
-        $user = User::factory()->create();
+        $user = User::create([
+            'name' => 'John Doe',
+            'email' => 'john.doe@gmail.com',
+            'password' => \Hash::make('password'),
+            'avatar' => '/images/default-avatar.png'
+        ]);
         $tags = Tag::factory(5)->state([
             'user_id' => $user->id
         ])->create();

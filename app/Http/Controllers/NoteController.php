@@ -28,8 +28,8 @@ class NoteController extends Controller
     public function store()
     {
         $note = request()->validate([
-            'title' => 'required|string',
-            'body' => 'required|string'
+            'title' => 'sometimes|string|nullable',
+            'body' => 'sometimes|string|nullable'
         ]);
 
         $note['user_id'] = auth()->id();
@@ -47,7 +47,7 @@ class NoteController extends Controller
     {
         $this->authorize('view', $note);
 
-        return $note;
+        return $note->load('tag');
     }
 
     /**
@@ -60,13 +60,18 @@ class NoteController extends Controller
     {
         $this->authorize('update', $note);
         $data = request()->validate([
-            'title' => 'required|string',
-            'body' => 'required|string'
+            'title' => 'sometimes|string|nullable',
+            'body' => 'sometimes|string|nullable',
+            'tag_id' => 'sometimes|exists:tags,id'
         ]);
+
+        if(!request()->has('tag_id')) {
+            $data['tag_id'] = null; // Remove tag
+        }
 
         $note->update($data);
 
-        return $note;
+        return $note->load('tag');
     }
 
     /**
@@ -81,6 +86,8 @@ class NoteController extends Controller
 
         $note->delete();
 
-        return response('Note deleted successfully', 200);
+        return response([
+            'message' => 'Note deleted successfully'
+        ], 200);
     }
 }
