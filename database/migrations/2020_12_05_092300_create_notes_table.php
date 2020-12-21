@@ -18,7 +18,7 @@ class CreateNotesTable extends Migration
             $table->string('title')->nullable();
             $table->text('body')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('tag_id')->nullable()->constrained()->onDelete('cascade');
+            $table->boolean('is_pinned')->default(false);
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

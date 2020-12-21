@@ -6,6 +6,7 @@ use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class UserSeeder extends Seeder
         $user = User::create([
             'name' => 'John Doe',
             'email' => 'john.doe@gmail.com',
-            'password' => \Hash::make('password'),
+            'password' => Hash::make('password'),
             'avatar' => '/images/default-avatar.png'
         ]);
         $tags = Tag::factory(5)->state([
@@ -28,7 +29,10 @@ class UserSeeder extends Seeder
         ])->create();
         $notes = Note::factory(3)->state([
             'user_id' => $user->id,
-            'tag_id' => $tags->first()->id
         ])->create();
+
+        foreach($notes as $note) {
+            $note->tags()->attach($tags->pluck('id')->toArray());
+        }
     }
 }

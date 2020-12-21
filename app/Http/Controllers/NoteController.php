@@ -15,7 +15,7 @@ class NoteController extends Controller
     public function index()
     {
         return Note::where('user_id', auth()->id())
-            ->with('tag')
+            ->with('tags')
             ->latest()
             ->get();
     }
@@ -47,7 +47,7 @@ class NoteController extends Controller
     {
         $this->authorize('view', $note);
 
-        return $note->load('tag');
+        return $note->load('tags');
     }
 
     /**
@@ -62,16 +62,12 @@ class NoteController extends Controller
         $data = request()->validate([
             'title' => 'sometimes|string|nullable',
             'body' => 'sometimes|string|nullable',
-            'tag_id' => 'sometimes|exists:tags,id'
+            'is_pinned' => 'sometimes|boolean'
         ]);
-
-        if(!request()->has('tag_id')) {
-            $data['tag_id'] = null; // Remove tag
-        }
 
         $note->update($data);
 
-        return $note->load('tag');
+        return $note->load('tags');
     }
 
     /**

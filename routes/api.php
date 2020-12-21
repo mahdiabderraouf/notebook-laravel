@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('notes', 'NoteController');
     Route::resource('tags', 'TagController');
+
+    Route::post('/notes/{note}/tags', 'NoteTagsController@store');
+    Route::delete('/notes/{note}/tags/{tag}', 'NoteTagsController@destroy');
 });
 
 Auth::routes([

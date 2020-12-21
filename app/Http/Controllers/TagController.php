@@ -15,7 +15,6 @@ class TagController extends Controller
     public function index()
     {
         return Tag::where('user_id', auth()->id())
-            ->with('notes')
             ->get();
     }
 

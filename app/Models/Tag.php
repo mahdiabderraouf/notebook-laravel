@@ -18,6 +18,6 @@ class Tag extends Model
 
     // A tag has many notes
     public function notes() {
-        return $this->hasMany(Note::class);
+        return $this->belongsToMany(Note::class);
     }
 }

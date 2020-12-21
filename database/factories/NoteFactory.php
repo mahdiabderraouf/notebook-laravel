@@ -27,7 +27,6 @@ class NoteFactory extends Factory
             'title' => $this->faker->sentence,
             'body' => $this->faker->text,
             'user_id' => User::factory(),
-            'tag_id' => Tag::factory()
         ];
     }
 }
