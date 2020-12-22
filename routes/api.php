@@ -20,12 +20,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/user', 'UserController@update');
     Route::patch('/user/password', 'PasswordController@update');
     Route::patch('/user/avatar', 'AvatarController@update');
-
+    
+    Route::get('/notes/trashed', 'NotesTrashController@index');
+    Route::patch('/notes/trashed/{id}', 'NotesTrashController@restore');
+    Route::delete('/notes/trashed/{id}', 'NotesTrashController@destroy');
     Route::resource('notes', 'NoteController');
     Route::resource('tags', 'TagController');
 
     Route::post('/notes/{note}/tags', 'NoteTagsController@store');
     Route::delete('/notes/{note}/tags/{tag}', 'NoteTagsController@destroy');
+    
 });
 
 Auth::routes([
