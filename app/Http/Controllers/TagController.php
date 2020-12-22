@@ -78,6 +78,8 @@ class TagController extends Controller
 
         $tag->delete();
 
-        return response('Tag deleted successfully', 200);
+        return response([
+            'message' => 'Tag deleted successfully'
+        ], 200);
     }
 }

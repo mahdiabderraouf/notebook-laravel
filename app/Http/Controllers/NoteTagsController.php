@@ -15,6 +15,7 @@ class NoteTagsController extends Controller
      * @return \App\Models\Note
      */
     public function store(Note $note) {
+        $this->authorize('update', $note);
         $data = request()->validate([
             'title' => 'required|string'
         ]);
@@ -39,6 +40,8 @@ class NoteTagsController extends Controller
      * @return \App\Models\Note
      */
     public function destroy(Note $note, Tag $tag) {
+        $this->authorize('delete', $note);
+        
         $note->tags()->detach($tag->id);
 
         return $note->load('tags');

@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return auth()->user();
-    });
+    Route::get('/user', 'UserController@index');
+    Route::patch('/user', 'UserController@update');
+    Route::patch('/user/password', 'PasswordController@update');
+    Route::patch('/user/avatar', 'AvatarController@update');
 
     Route::resource('notes', 'NoteController');
     Route::resource('tags', 'TagController');
